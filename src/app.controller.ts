@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
+import { TodoService } from './modules/todo/todo.service';
 
-@Controller()
+@Controller('api')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
+  @Header('Content-Type', 'application/json')
+  @HttpCode(HttpStatus.OK)
+  getHello() {
     return this.appService.getHello();
   }
 }
