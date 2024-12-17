@@ -9,6 +9,7 @@ import {
   Res,
   HttpStatus,
   HttpCode,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { TodoService } from './todo.service';
@@ -18,7 +19,7 @@ import { Todo } from './interface';
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
   @Get(':id')
-  async getTodo(@Param('id') id: string): Promise<Todo | string> {
+  async getTodo(@Param('id', ParseIntPipe) id: number): Promise<Todo | string> {
     return this.todoService.getTodo(id);
   }
 
@@ -29,7 +30,7 @@ export class TodoController {
   }
 
   @Delete(':id')
-  deleteTodo(@Param('id') id: string): string {
+  deleteTodo(@Param('id', ParseIntPipe) id: number): string {
     return this.todoService.deleteTodo(id);
   }
 }
